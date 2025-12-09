@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import ArtworkCard from "@/components/ArtworkCard";
-import { artworks } from "@/data/artworks";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGallery } from "@/hooks";
 
 const Home = () => {
+  // Fetch gallery items from API
+  const { data, isLoading } = useGallery();
+  
   // Show first 3 artworks as featured
-  const featuredArtworks = artworks.slice(0, 3);
+  const allArtworks = data?.data || [];
+  const featuredArtworks = allArtworks.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background">
@@ -26,17 +31,34 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            {featuredArtworks.map((artwork, index) => (
-              <div 
-                key={artwork.id}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <ArtworkCard {...artwork} />
-              </div>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+              {[...Array(3)].map((_, index) => (
+                <div key={index} className="space-y-4">
+                  <Skeleton className="h-80 w-full" />
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+              {featuredArtworks.map((artwork, index) => (
+                <div 
+                  key={artwork._id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
+                  <ArtworkCard 
+                    id={artwork._id}
+                    title={artwork.title}
+                    category={artwork.category.name}
+                    image={artwork.image}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
           
           <div className="text-center">
             <Link to="/gallery">

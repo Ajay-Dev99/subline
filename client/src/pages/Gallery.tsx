@@ -1,15 +1,19 @@
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import ArtworkCard from "@/components/ArtworkCard";
-import { artworks, categories } from "@/data/artworks";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGallery, useCategories } from "@/hooks";
 
 const Gallery = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("");
   
-  const filteredArtworks = selectedCategory === "All" 
-    ? artworks 
-    : artworks.filter(artwork => artwork.category === selectedCategory);
+  // Fetch data from API using React Query
+  const { data: galleryData, isLoading: galleryLoading } = useGallery(selectedCategory);
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
+  
+  const artworks = galleryData?.data || [];
+  const categories = categoriesData?.data || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -27,35 +31,68 @@ const Gallery = () => {
           
           {/* Category Filter */}
           <div className="flex flex-wrap justify-center gap-3 mb-16">
-            {categories.map((category, index) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {category}
-              </Button>
-            ))}
+            <Button
+              variant={selectedCategory === "" ? "default" : "outline"}
+              onClick={() => setSelectedCategory("")}
+              className="animate-fade-in"
+            >
+              All
+            </Button>
+            {categoriesLoading ? (
+              <Skeleton className="h-10 w-24" />
+            ) : (
+              categories.map((category, index) => (
+                <Button
+                  key={category._id}
+                  variant={selectedCategory === category._id ? "default" : "outline"}
+                  onClick={() => setSelectedCategory(category._id)}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {category.name}
+                </Button>
+              ))
+            )}
           </div>
           
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {filteredArtworks.map((artwork, index) => (
-              <div 
-                key={artwork.id}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <ArtworkCard {...artwork} />
-              </div>
-            ))}
-          </div>
-          
-          {filteredArtworks.length === 0 && (
+          {galleryLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="space-y-4">
+                  <Skeleton className="h-80 w-full" />
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : artworks.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground">No artworks found in this category.</p>
+              <Button 
+                variant="outline" 
+                onClick={() => setSelectedCategory("")}
+                className="mt-4"
+              >
+                View All Artworks
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {artworks.map((artwork, index) => (
+                <div 
+                  key={artwork._id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <ArtworkCard 
+                    id={artwork._id}
+                    title={artwork.title}
+                    category={artwork.category.name}
+                    image={artwork.image}
+                  />
+                </div>
+              ))}
             </div>
           )}
         </div>
