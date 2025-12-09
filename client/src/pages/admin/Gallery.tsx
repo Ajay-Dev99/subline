@@ -280,7 +280,7 @@ const Gallery = () => {
     setPreviewUrl(item.image)
   }
 
-  const FormFields = () => (
+  const renderFormFields = () => (
     <div className="space-y-4">
       <div>
         <Label htmlFor="title">Title *</Label>
@@ -395,7 +395,7 @@ const Gallery = () => {
                 <DialogTitle>Create New Artwork</DialogTitle>
               </DialogHeader>
               <div className="py-4">
-                <FormFields />
+                {renderFormFields()}
                 <div className="flex justify-end gap-2 mt-6">
                   <Button
                     variant="outline"
@@ -497,7 +497,7 @@ const Gallery = () => {
             <DialogTitle>Edit Artwork</DialogTitle>
           </DialogHeader>
           <div className="py-4">
-            <FormFields />
+            {renderFormFields()}
             <div className="flex justify-end gap-2 mt-6">
               <Button variant="outline" onClick={() => setEditingItem(null)}>
                 Cancel
