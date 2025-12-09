@@ -7,21 +7,16 @@ const {
     updateGallery,
     deleteGallery
 } = require('../controllers/galleryController');
+const { protect } = require('../middleware/auth');
 
-// GET all gallery items (with optional category filter: ?category=categoryId)
+// Public routes
 router.get('/', getAllGallery);
-
-// GET single gallery item
 router.get('/:id', getGalleryById);
 
-// POST create gallery item
-router.post('/', createGallery);
-
-// PUT update gallery item
-router.put('/:id', updateGallery);
-
-// DELETE gallery item
-router.delete('/:id', deleteGallery);
+// Protected routes (admin only)
+router.post('/', protect, createGallery);
+router.put('/:id', protect, updateGallery);
+router.delete('/:id', protect, deleteGallery);
 
 module.exports = router;
 

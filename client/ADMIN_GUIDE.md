@@ -1,6 +1,7 @@
 # Admin Panel Guide
 
 ## Overview
+
 The admin panel provides a complete content management system for your art portfolio. Manage categories and gallery items through an intuitive interface.
 
 ## Access Admin Panel
@@ -20,6 +21,7 @@ Navigate to: `http://localhost:5173/admin`
 **Location:** `/admin/categories`
 
 **Features:**
+
 - ✅ Create new categories
 - ✅ Edit existing categories
 - ✅ Delete categories
@@ -27,6 +29,7 @@ Navigate to: `http://localhost:5173/admin`
 - ✅ Real-time updates
 
 **Actions:**
+
 1. **Create Category:** Click "Add Category" button, enter name, and save
 2. **Edit Category:** Click edit icon, modify name, and save
 3. **Delete Category:** Click delete icon, confirm deletion
@@ -36,6 +39,7 @@ Navigate to: `http://localhost:5173/admin`
 **Location:** `/admin/gallery`
 
 **Features:**
+
 - ✅ Upload artwork images to Cloudinary
 - ✅ Create gallery items with full details
 - ✅ Edit existing artworks
@@ -45,21 +49,25 @@ Navigate to: `http://localhost:5173/admin`
 - ✅ Category filtering
 
 **Form Fields:**
-- **Title*** - Artwork title (required)
-- **Category*** - Select from existing categories (required)
-- **Image*** - Upload image file (required)
+
+- **Title\*** - Artwork title (required)
+- **Category\*** - Select from existing categories (required)
+- **Image\*** - Upload image file (required)
 - **Description** - Detailed artwork description
 - **Medium** - Art medium (e.g., "Oil on Canvas")
 - **Size** - Dimensions (e.g., "24 × 36 inches")
 
 **Actions:**
+
 1. **Add Artwork:**
+
    - Click "Add Artwork" button
    - Fill in the form
    - Select image file (auto-previews)
    - Click "Create" (image uploads to Cloudinary)
 
 2. **Edit Artwork:**
+
    - Click "Edit" on any artwork card
    - Modify fields as needed
    - Optionally upload new image (old one auto-deleted)
@@ -99,6 +107,7 @@ npm run dev
 ### 4. Access Admin Panel
 
 Open browser and navigate to:
+
 ```
 http://localhost:5173/admin
 ```
@@ -106,13 +115,16 @@ http://localhost:5173/admin
 ## Image Upload Process
 
 ### Automatic Optimization
+
 All uploaded images are automatically:
+
 - Compressed with `quality: auto:good`
 - Converted to optimal format (WebP for modern browsers)
 - Resized to max 2000x2000px (maintains aspect ratio)
 - Limited to 5MB file size
 
 ### Upload Flow
+
 1. User selects image file
 2. Preview shown immediately
 3. On form submit, image uploads to Cloudinary
@@ -120,23 +132,27 @@ All uploaded images are automatically:
 5. Gallery item created with image URL
 
 ### Cleanup
+
 - **On Update:** If new image uploaded, old image deleted from Cloudinary
 - **On Delete:** Gallery item and associated image both deleted
 
 ## Best Practices
 
 ### Categories
+
 1. Create all categories before adding artworks
 2. Use clear, descriptive category names
 3. Keep category count manageable (5-10 recommended)
 
 ### Gallery Items
+
 1. Use high-quality images (but under 5MB)
 2. Write descriptive titles and descriptions
 3. Include medium and size for context
 4. Preview images before uploading
 
 ### Performance
+
 1. Compress large images before upload when possible
 2. Use appropriate image dimensions (2000px max)
 3. Avoid uploading same image multiple times
@@ -149,6 +165,7 @@ All uploaded images are automatically:
 ## Error Handling
 
 The admin panel includes comprehensive error handling:
+
 - Form validation messages
 - Upload progress indicators
 - Success/error toast notifications
@@ -157,6 +174,7 @@ The admin panel includes comprehensive error handling:
 ## Common Operations
 
 ### Adding Multiple Artworks
+
 1. Navigate to `/admin/gallery`
 2. Click "Add Artwork" for each piece
 3. Upload optimized images
@@ -164,11 +182,13 @@ The admin panel includes comprehensive error handling:
 5. Images automatically organized by category
 
 ### Updating Category for Artwork
+
 1. Edit the artwork
 2. Select new category from dropdown
 3. Save changes
 
 ### Replacing Artwork Image
+
 1. Edit the artwork
 2. Select new image file
 3. Old image automatically deleted on save
@@ -177,16 +197,18 @@ The admin panel includes comprehensive error handling:
 ## Data Structure
 
 ### Category
+
 ```typescript
 {
-  _id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
+  _id: string
+  name: string
+  createdAt: string
+  updatedAt: string
 }
 ```
 
 ### Gallery Item
+
 ```typescript
 {
   _id: string;
@@ -207,16 +229,19 @@ The admin panel includes comprehensive error handling:
 ## Troubleshooting
 
 ### Images Not Uploading
+
 - Check Cloudinary credentials in backend `.env`
 - Verify file size is under 5MB
 - Ensure file is valid image format
 
 ### Categories Not Loading
+
 - Confirm backend server is running
 - Check API URL in frontend `.env`
 - Verify MongoDB connection
 
 ### Changes Not Appearing
+
 - Check browser console for errors
 - Verify API responses in Network tab
 - Ensure data validation passes
@@ -224,6 +249,7 @@ The admin panel includes comprehensive error handling:
 ## Security Notes
 
 > **Important:** This admin panel currently has no authentication. In production, you should:
+>
 > - Add authentication (JWT, OAuth, etc.)
 > - Implement authorization/roles
 > - Secure admin routes
@@ -233,6 +259,7 @@ The admin panel includes comprehensive error handling:
 ## Future Enhancements
 
 Potential improvements:
+
 - [ ] Authentication system
 - [ ] Bulk upload for multiple images
 - [ ] Image cropping/editing tools
@@ -240,4 +267,3 @@ Potential improvements:
 - [ ] Analytics dashboard
 - [ ] Search and filtering
 - [ ] Export/import functionality
-

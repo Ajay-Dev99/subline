@@ -1,6 +1,7 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { Home, Image, FolderTree } from "lucide-react"
+import { Home, Image, FolderTree, LogOut } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
 
 interface AdminLayoutProps {
   children: React.ReactNode
@@ -8,8 +9,15 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation()
+  const navigate = useNavigate()
+  const { admin, logout } = useAuth()
 
   const isActive = (path: string) => location.pathname === path
+
+  const handleLogout = () => {
+    logout()
+    navigate("/admin/login")
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -42,12 +50,23 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 </Link>
               </nav>
             </div>
-            <Link to="/">
-              <Button variant="outline" size="sm">
-                <Home className="w-4 h-4 mr-2" />
-                Back to Site
+            <div className="flex items-center gap-3">
+              {admin && (
+                <span className="text-sm text-muted-foreground">
+                  {admin.username}
+                </span>
+              )}
+              <Link to="/">
+                <Button variant="outline" size="sm">
+                  <Home className="w-4 h-4 mr-2" />
+                  Back to Site
+                </Button>
+              </Link>
+              <Button variant="destructive" size="sm" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </header>

@@ -1,5 +1,14 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api"
 
+// Helper to get auth headers
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("admin_token")
+  return {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  }
+}
+
 // Categories API
 export const categoryAPI = {
   getAll: async () => {
@@ -15,7 +24,7 @@ export const categoryAPI = {
   create: async (data: { name: string }) => {
     const response = await fetch(`${API_BASE_URL}/categories`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     })
     return response.json()
@@ -24,7 +33,7 @@ export const categoryAPI = {
   update: async (id: string, data: { name: string }) => {
     const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     })
     return response.json()
@@ -33,6 +42,7 @@ export const categoryAPI = {
   delete: async (id: string) => {
     const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
     })
     return response.json()
   },
@@ -56,7 +66,7 @@ export const galleryAPI = {
   create: async (data: any) => {
     const response = await fetch(`${API_BASE_URL}/gallery`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     })
     return response.json()
@@ -65,7 +75,7 @@ export const galleryAPI = {
   update: async (id: string, data: any) => {
     const response = await fetch(`${API_BASE_URL}/gallery/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     })
     return response.json()
@@ -74,6 +84,7 @@ export const galleryAPI = {
   delete: async (id: string) => {
     const response = await fetch(`${API_BASE_URL}/gallery/${id}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
     })
     return response.json()
   },
@@ -82,22 +93,30 @@ export const galleryAPI = {
 // Upload API
 export const uploadAPI = {
   uploadSingle: async (file: File) => {
+    const token = localStorage.getItem("admin_token")
     const formData = new FormData()
     formData.append("image", file)
 
     const response = await fetch(`${API_BASE_URL}/upload/single`, {
       method: "POST",
+      headers: {
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
       body: formData,
     })
     return response.json()
   },
 
   uploadMultiple: async (files: File[]) => {
+    const token = localStorage.getItem("admin_token")
     const formData = new FormData()
     files.forEach((file) => formData.append("images", file))
 
     const response = await fetch(`${API_BASE_URL}/upload/multiple`, {
       method: "POST",
+      headers: {
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
       body: formData,
     })
     return response.json()
@@ -106,7 +125,7 @@ export const uploadAPI = {
   deleteImage: async (imageUrl: string) => {
     const response = await fetch(`${API_BASE_URL}/upload`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ imageUrl }),
     })
     return response.json()

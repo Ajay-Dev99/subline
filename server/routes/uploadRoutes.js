@@ -6,15 +6,12 @@ const {
     uploadMultipleImages,
     deleteImage
 } = require('../controllers/uploadController');
+const { protect } = require('../middleware/auth');
 
-// Upload single image
-router.post('/single', upload.single('image'), uploadImage);
-
-// Upload multiple images (max 10)
-router.post('/multiple', upload.array('images', 10), uploadMultipleImages);
-
-// Delete image
-router.delete('/', deleteImage);
+// All upload routes are protected (admin only)
+router.post('/single', protect, upload.single('image'), uploadImage);
+router.post('/multiple', protect, upload.array('images', 10), uploadMultipleImages);
+router.delete('/', protect, deleteImage);
 
 module.exports = router;
 
