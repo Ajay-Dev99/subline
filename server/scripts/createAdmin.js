@@ -11,11 +11,11 @@ mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB Connected'))
-.catch((err) => {
-  console.error('MongoDB Connection Error:', err);
-  process.exit(1);
-});
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => {
+    console.error('MongoDB Connection Error:', err);
+    process.exit(1);
+  });
 
 // Import Admin model
 const Admin = require('../models/Admin');
@@ -25,7 +25,7 @@ const createAdmin = async () => {
   try {
     // Check if admin already exists
     const existingAdmin = await Admin.findOne({ username: 'admin' });
-    
+
     if (existingAdmin) {
       console.log('❌ Admin user already exists!');
       console.log('Username:', existingAdmin.username);
@@ -48,7 +48,7 @@ const createAdmin = async () => {
     console.log('Password: admin123');
     console.log('');
     console.log('⚠️  IMPORTANT: Change the password after first login!');
-    
+
     process.exit(0);
   } catch (error) {
     console.error('❌ Error creating admin:', error.message);

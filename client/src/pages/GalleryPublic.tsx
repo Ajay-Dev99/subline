@@ -23,8 +23,7 @@ const GalleryPublic = () => {
     error: galleryError,
   } = useGallery(selectedCategory)
 
-  const { data: categoriesData, isLoading: categoriesLoading } =
-    useCategories()
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories()
 
   const artworks = galleryData?.data || []
   const categories = categoriesData?.data || []
@@ -102,9 +101,7 @@ const GalleryPublic = () => {
               <p className="text-muted-foreground mb-4">
                 No artworks found in this category
               </p>
-              <Button onClick={() => setSelectedCategory("")}>
-                View All
-              </Button>
+              <Button onClick={() => setSelectedCategory("")}>View All</Button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -131,7 +128,7 @@ const GalleryPublic = () => {
       <footer className="border-t border-border py-12">
         <div className="container mx-auto px-6">
           <div className="text-center text-sm text-muted-foreground">
-            <p>© 2024 Artist Portfolio. All rights reserved.</p>
+            <p>© 2024 Linesofpaar. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -140,4 +137,3 @@ const GalleryPublic = () => {
 }
 
 export default GalleryPublic
-

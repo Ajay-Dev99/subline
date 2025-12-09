@@ -1,9 +1,11 @@
 # Authentication Guide
 
 ## Overview
+
 The admin panel is now protected with JWT-based authentication. Only authenticated users can access admin routes and perform CRUD operations.
 
 ## Features
+
 - ✅ JWT token-based authentication
 - ✅ Password hashing with bcrypt
 - ✅ Protected admin routes (frontend & backend)
@@ -16,6 +18,7 @@ The admin panel is now protected with JWT-based authentication. Only authenticat
 ### 1. Configure Environment Variables
 
 Add to `server/.env`:
+
 ```env
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 ```
@@ -32,6 +35,7 @@ node scripts/createAdmin.js
 ```
 
 This creates an admin with default credentials:
+
 - Username: `admin`
 - Email: `admin@subline.com`
 - Password: `admin123`
@@ -50,6 +54,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "success": true,
@@ -79,6 +84,7 @@ Response:
 ### Authentication Routes
 
 #### Register Admin
+
 ```http
 POST /api/auth/register
 Content-Type: application/json
@@ -91,6 +97,7 @@ Content-Type: application/json
 ```
 
 #### Login
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -102,6 +109,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "success": true,
@@ -118,12 +126,14 @@ Response:
 ```
 
 #### Verify Token
+
 ```http
 GET /api/auth/verify
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 #### Logout
+
 ```http
 POST /api/auth/logout
 Authorization: Bearer YOUR_JWT_TOKEN
@@ -134,16 +144,19 @@ Authorization: Bearer YOUR_JWT_TOKEN
 All these routes now require authentication:
 
 **Categories:**
+
 - `POST /api/categories` - Create category
 - `PUT /api/categories/:id` - Update category
 - `DELETE /api/categories/:id` - Delete category
 
 **Gallery:**
+
 - `POST /api/gallery` - Create gallery item
 - `PUT /api/gallery/:id` - Update gallery item
 - `DELETE /api/gallery/:id` - Delete gallery item
 
 **Upload:**
+
 - `POST /api/upload/single` - Upload single image
 - `POST /api/upload/multiple` - Upload multiple images
 - `DELETE /api/upload` - Delete image
@@ -151,10 +164,12 @@ All these routes now require authentication:
 ### Public Routes (No Auth Required)
 
 **Categories:**
+
 - `GET /api/categories` - Get all categories
 - `GET /api/categories/:id` - Get single category
 
 **Gallery:**
+
 - `GET /api/gallery` - Get all gallery items
 - `GET /api/gallery/:id` - Get single gallery item
 
@@ -167,7 +182,7 @@ import { useAuth } from "@/contexts/AuthContext"
 
 function LoginComponent() {
   const { login } = useAuth()
-  
+
   const handleLogin = async () => {
     try {
       await login(username, password)
@@ -183,8 +198,7 @@ function LoginComponent() {
 
 ```typescript
 import ProtectedRoute from "@/components/ProtectedRoute"
-
-<Route
+;<Route
   path="/admin"
   element={
     <ProtectedRoute>
@@ -201,12 +215,8 @@ import { useAuth } from "@/contexts/AuthContext"
 
 function LogoutButton() {
   const { logout } = useAuth()
-  
-  return (
-    <button onClick={logout}>
-      Logout
-    </button>
-  )
+
+  return <button onClick={logout}>Logout</button>
 }
 ```
 
@@ -217,9 +227,9 @@ import { useAuth } from "@/contexts/AuthContext"
 
 function Component() {
   const { isAuthenticated, admin, loading } = useAuth()
-  
+
   if (loading) return <div>Loading...</div>
-  
+
   return (
     <div>
       {isAuthenticated ? (
@@ -235,12 +245,14 @@ function Component() {
 ## Security Features
 
 ### Backend
+
 1. **Password Hashing:** Passwords hashed with bcrypt (10 salt rounds)
 2. **JWT Tokens:** Signed with secret key, expires in 7 days
 3. **Protected Routes:** Middleware verifies token on protected endpoints
 4. **Password Excluded:** Password field removed from JSON responses
 
 ### Frontend
+
 1. **Token Storage:** JWT stored in localStorage
 2. **Auto Verification:** Token verified on app load
 3. **Protected Routes:** Unauthenticated users redirected to login
@@ -258,21 +270,25 @@ function Component() {
 ## Troubleshooting
 
 ### Cannot Login
+
 - Verify MongoDB is running
 - Check admin user exists (run createAdmin.js)
 - Verify credentials are correct
 - Check browser console for errors
 
 ### Token Expired
+
 - Login again to get new token
 - Token expires after 7 days
 
 ### 401 Unauthorized Errors
+
 - Token may be invalid or expired
 - Try logging out and back in
 - Clear localStorage and login again
 
 ### Cannot Access Admin Panel
+
 - Ensure you're logged in
 - Check token in localStorage: `localStorage.getItem('admin_token')`
 - Verify backend is running
@@ -282,25 +298,30 @@ function Component() {
 ### Security Best Practices
 
 1. **Strong JWT Secret**
+
    ```env
    # Generate with: node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
    JWT_SECRET=a1b2c3d4e5f6...very-long-random-string
    ```
 
 2. **Environment Variables**
+
    - Never commit `.env` files
    - Use different secrets for dev/prod
    - Store secrets securely (AWS Secrets Manager, etc.)
 
 3. **HTTPS Only**
+
    - Use HTTPS in production
    - Secure cookie flags if using cookies
 
 4. **Rate Limiting**
+
    - Add rate limiting to login endpoint
    - Prevent brute force attacks
 
 5. **Password Policy**
+
    - Enforce strong passwords
    - Minimum 8 characters
    - Require special characters
@@ -318,6 +339,7 @@ function Component() {
 ### Using curl
 
 **Login:**
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -325,6 +347,7 @@ curl -X POST http://localhost:3000/api/auth/login \
 ```
 
 **Access Protected Route:**
+
 ```bash
 curl -X POST http://localhost:3000/api/categories \
   -H "Content-Type: application/json" \
@@ -349,4 +372,3 @@ Password: admin123
 ```
 
 After first login, create a new admin with a strong password and delete the default admin.
-

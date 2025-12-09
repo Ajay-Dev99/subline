@@ -25,7 +25,7 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 // Root endpoint
 app.get('/', (req, res) => {
     res.json({
-        message: 'Subline Art Portfolio API',
+        message: 'Linesofpaar API',
         endpoints: {
             auth: '/api/auth',
             categories: '/api/categories',
