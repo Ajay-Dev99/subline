@@ -1,11 +1,57 @@
 const express = require('express');
-const app = express();
-const port = 3000;
+const cors = require('cors');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/subline', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('MongoDB Connected Successfully'))
+    .catch((err) => console.error('MongoDB Connection Error:', err));
+
+// Routes
+app.use('/api/categories', require('./routes/categoryRoutes'));
+app.use('/api/gallery', require('./routes/galleryRoutes'));
+
+// Root endpoint
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.json({
+        message: 'Subline Art Portfolio API',
+        endpoints: {
+            categories: '/api/categories',
+            gallery: '/api/gallery'
+        }
+    });
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'Route not found'
+    });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: 'Something went wrong!',
+        error: process.env.NODE_ENV === 'development' ? err.message : {}
+    });
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
