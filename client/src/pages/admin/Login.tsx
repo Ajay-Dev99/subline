@@ -110,16 +110,6 @@ const Login = () => {
               )}
             </Button>
           </form>
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>Default credentials for first time:</p>
-            <p className="mt-1">
-              Use{" "}
-              <code className="bg-gray-100 px-2 py-1 rounded">
-                POST /api/auth/register
-              </code>{" "}
-              to create admin account
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
