@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/subline',
 // Routes
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
+app.use('/api/upload', require('./routes/uploadRoutes'));
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -29,7 +30,8 @@ app.get('/', (req, res) => {
         message: 'Subline Art Portfolio API',
         endpoints: {
             categories: '/api/categories',
-            gallery: '/api/gallery'
+            gallery: '/api/gallery',
+            upload: '/api/upload'
         }
     });
 });

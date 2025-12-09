@@ -1,4 +1,5 @@
 const Gallery = require('../models/Gallery');
+const { deleteImage } = require('../config/cloudinary');
 
 // Get all gallery items
 exports.getAllGallery = async (req, res) => {
@@ -96,18 +97,32 @@ exports.updateGallery = async (req, res) => {
     try {
         const { title, category, image, description, medium, size } = req.body;
 
-        const gallery = await Gallery.findByIdAndUpdate(
-            req.params.id,
-            { title, category, image, description, medium, size },
-            { new: true, runValidators: true }
-        ).populate('category', 'name');
+        // Find existing gallery item
+        const existingGallery = await Gallery.findById(req.params.id);
 
-        if (!gallery) {
+        if (!existingGallery) {
             return res.status(404).json({
                 success: false,
                 message: 'Gallery item not found'
             });
         }
+
+        // If image is being updated, delete old image from Cloudinary
+        if (image && image !== existingGallery.image) {
+            try {
+                await deleteImage(existingGallery.image);
+            } catch (error) {
+                console.error('Error deleting old image:', error);
+                // Continue with update even if delete fails
+            }
+        }
+
+        // Update gallery item
+        const gallery = await Gallery.findByIdAndUpdate(
+            req.params.id,
+            { title, category, image, description, medium, size },
+            { new: true, runValidators: true }
+        ).populate('category', 'name');
 
         res.status(200).json({
             success: true,
@@ -125,7 +140,7 @@ exports.updateGallery = async (req, res) => {
 // Delete gallery item
 exports.deleteGallery = async (req, res) => {
     try {
-        const gallery = await Gallery.findByIdAndDelete(req.params.id);
+        const gallery = await Gallery.findById(req.params.id);
 
         if (!gallery) {
             return res.status(404).json({
@@ -134,9 +149,20 @@ exports.deleteGallery = async (req, res) => {
             });
         }
 
+        // Delete image from Cloudinary
+        try {
+            await deleteImage(gallery.image);
+        } catch (error) {
+            console.error('Error deleting image from Cloudinary:', error);
+            // Continue with deletion even if Cloudinary delete fails
+        }
+
+        // Delete gallery item from database
+        await Gallery.findByIdAndDelete(req.params.id);
+
         res.status(200).json({
             success: true,
-            message: 'Gallery item deleted successfully'
+            message: 'Gallery item and image deleted successfully'
         });
     } catch (error) {
         res.status(500).json({
