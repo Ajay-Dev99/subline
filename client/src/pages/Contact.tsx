@@ -67,7 +67,7 @@ const Contact = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="your.email@example.com"
+                  placeholder="vsparvana2@gmail.com"
                   required
                 />
               </div>
@@ -102,7 +102,7 @@ const Contact = () => {
                   <span>Email</span>
                 </a>
                 <a 
-                  href="https://instagram.com" 
+                  href="https://www.instagram.com/linesofpaar/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -110,15 +110,7 @@ const Contact = () => {
                   <Instagram className="w-5 h-5" />
                   <span>Instagram</span>
                 </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Twitter className="w-5 h-5" />
-                  <span>Twitter</span>
-                </a>
+                
               </div>
             </div>
           </div>
