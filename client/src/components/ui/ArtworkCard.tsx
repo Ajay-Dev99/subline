@@ -17,7 +17,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   return (
     <Link
       to={`/artwork/${id}`}
-      className="block rounded-xl overflow-hidden shadow-md bg-white hover:shadow-xl transition-all duration-300 group"
+      className="block  overflow-hidden shadow-md bg-white hover:shadow-xl transition-all duration-300 group"
     >
       <div className="relative w-full h-80 overflow-hidden">
         <img
