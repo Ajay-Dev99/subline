@@ -60,12 +60,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           },
         })
 
-        const data = await response.json()
+      const data = await response.json()
 
-        if (data.success) {
-          setAdmin(data.data.admin)
-          setToken(storedToken)
-        } else {
+      if (data?.success) {
+        setAdmin(data?.data?.admin)
+        setToken(storedToken)
+      } else {
           localStorage.removeItem("admin_token")
           setToken(null)
           setAdmin(null)
@@ -95,13 +95,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const data = await response.json()
 
-      if (!data.success) {
-        throw new Error(data.message || "Login failed")
+      if (!data?.success) {
+        throw new Error(data?.message || "Login failed")
       }
 
-      setAdmin(data.data.admin)
-      setToken(data.data.token)
-      localStorage.setItem("admin_token", data.data.token)
+      setAdmin(data?.data?.admin)
+      setToken(data?.data?.token)
+      localStorage.setItem("admin_token", data?.data?.token)
     } catch (error) {
       throw error
     }

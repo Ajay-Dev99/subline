@@ -77,18 +77,18 @@ export const useCreateGallery = () => {
     }) => {
       // Upload image first
       const uploadResponse = await uploadAPI.uploadSingle(file)
-      if (!uploadResponse.success) {
-        throw new Error(uploadResponse.message || "Failed to upload image")
+      if (!uploadResponse?.success) {
+        throw new Error(uploadResponse?.message || "Failed to upload image")
       }
 
       // Create gallery item with uploaded image URL
       return galleryAPI.create({
         ...data,
-        image: uploadResponse.data.url,
+        image: uploadResponse?.data?.url,
       })
     },
     onSuccess: (response) => {
-      if (response.success) {
+      if (response?.success) {
         queryClient.invalidateQueries({ queryKey: galleryKeys.lists() })
         toast({
           title: "Success",
@@ -97,7 +97,7 @@ export const useCreateGallery = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to create gallery item",
+          description: response?.message || "Failed to create gallery item",
           variant: "destructive",
         })
       }
@@ -105,7 +105,7 @@ export const useCreateGallery = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to create gallery item",
+        description: error?.message || "Failed to create gallery item",
         variant: "destructive",
       })
     },
@@ -132,10 +132,10 @@ export const useUpdateGallery = () => {
       // Upload new image if provided
       if (file) {
         const uploadResponse = await uploadAPI.uploadSingle(file)
-        if (!uploadResponse.success) {
-          throw new Error(uploadResponse.message || "Failed to upload image")
+        if (!uploadResponse?.success) {
+          throw new Error(uploadResponse?.message || "Failed to upload image")
         }
-        imageUrl = uploadResponse.data.url
+        imageUrl = uploadResponse?.data?.url
       }
 
       return galleryAPI.update(id, {
@@ -144,10 +144,10 @@ export const useUpdateGallery = () => {
       })
     },
     onSuccess: (response, variables) => {
-      if (response.success) {
+      if (response?.success) {
         queryClient.invalidateQueries({ queryKey: galleryKeys.lists() })
         queryClient.invalidateQueries({
-          queryKey: galleryKeys.detail(variables.id),
+          queryKey: galleryKeys.detail(variables?.id),
         })
         toast({
           title: "Success",
@@ -156,7 +156,7 @@ export const useUpdateGallery = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to update gallery item",
+          description: response?.message || "Failed to update gallery item",
           variant: "destructive",
         })
       }
@@ -164,7 +164,7 @@ export const useUpdateGallery = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to update gallery item",
+        description: error?.message || "Failed to update gallery item",
         variant: "destructive",
       })
     },
@@ -179,7 +179,7 @@ export const useDeleteGallery = () => {
   return useMutation({
     mutationFn: (id: string) => galleryAPI.delete(id),
     onSuccess: (response) => {
-      if (response.success) {
+      if (response?.success) {
         queryClient.invalidateQueries({ queryKey: galleryKeys.lists() })
         toast({
           title: "Success",
@@ -188,7 +188,7 @@ export const useDeleteGallery = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to delete gallery item",
+          description: response?.message || "Failed to delete gallery item",
           variant: "destructive",
         })
       }
@@ -196,7 +196,7 @@ export const useDeleteGallery = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to delete gallery item",
+        description: error?.message || "Failed to delete gallery item",
         variant: "destructive",
       })
     },
@@ -212,7 +212,7 @@ export const useUploadImage = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to upload image",
+        description: error?.message || "Failed to upload image",
         variant: "destructive",
       })
     },

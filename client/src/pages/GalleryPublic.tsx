@@ -64,8 +64,8 @@ const GalleryPublic = () => {
               <SelectContent>
                 <SelectItem value="">All Categories</SelectItem>
                 {categories.map((category) => (
-                  <SelectItem key={category._id} value={category._id}>
-                    {category.name}
+                  <SelectItem key={category?._id} value={category?._id}>
+                    {category?.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -112,10 +112,10 @@ const GalleryPublic = () => {
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <ArtworkCard
-                    id={artwork._id}
-                    title={artwork.title}
-                    category={artwork.category.name}
-                    image={artwork.image}
+                    id={artwork?._id}
+                    title={artwork?.title}
+                    category={artwork?.category?.name}
+                    image={artwork?.image}
                   />
                 </div>
               ))}

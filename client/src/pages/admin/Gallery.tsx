@@ -85,8 +85,8 @@ const Gallery = () => {
         galleryAPI.getAll(),
         categoryAPI.getAll(),
       ])
-      if (galleryRes.success) setItems(galleryRes.data)
-      if (categoriesRes.success) setCategories(categoriesRes.data)
+      if (galleryRes?.success) setItems(galleryRes?.data || [])
+      if (categoriesRes?.success) setCategories(categoriesRes?.data || [])
     } catch (error) {
       toast({
         title: "Error",
@@ -112,10 +112,10 @@ const Gallery = () => {
     try {
       setUploading(true)
       const response = await uploadAPI.uploadSingle(selectedFile)
-      if (response.success) {
-        return response.data.url
+      if (response?.success) {
+        return response?.data?.url
       } else {
-        throw new Error(response.message)
+        throw new Error(response?.message || "Upload failed")
       }
     } catch (error) {
       toast({
@@ -170,7 +170,7 @@ const Gallery = () => {
         image: imageUrl,
       })
 
-      if (response.success) {
+      if (response?.success) {
         toast({
           title: "Success",
           description: "Gallery item created successfully",
@@ -181,7 +181,7 @@ const Gallery = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to create item",
+          description: response?.message || "Failed to create item",
           variant: "destructive",
         })
       }
@@ -208,12 +208,12 @@ const Gallery = () => {
         imageUrl = await uploadImage()
       }
 
-      const response = await galleryAPI.update(editingItem._id, {
+      const response = await galleryAPI.update(editingItem?._id, {
         ...formData,
         image: imageUrl,
       })
 
-      if (response.success) {
+      if (response?.success) {
         toast({
           title: "Success",
           description: "Gallery item updated successfully",
@@ -224,7 +224,7 @@ const Gallery = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to update item",
+          description: response?.message || "Failed to update item",
           variant: "destructive",
         })
       }
@@ -243,8 +243,8 @@ const Gallery = () => {
     if (!deletingItem) return
 
     try {
-      const response = await galleryAPI.delete(deletingItem._id)
-      if (response.success) {
+      const response = await galleryAPI.delete(deletingItem?._id)
+      if (response?.success) {
         toast({
           title: "Success",
           description: "Gallery item deleted successfully",
@@ -254,7 +254,7 @@ const Gallery = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to delete item",
+          description: response?.message || "Failed to delete item",
           variant: "destructive",
         })
       }
@@ -270,14 +270,14 @@ const Gallery = () => {
   const openEditDialog = (item: GalleryItem) => {
     setEditingItem(item)
     setFormData({
-      title: item.title,
-      category: item.category._id,
-      image: item.image,
-      description: item.description || "",
-      medium: item.medium || "",
-      size: item.size || "",
+      title: item?.title || "",
+      category: item?.category?._id || "",
+      image: item?.image || "",
+      description: item?.description || "",
+      medium: item?.medium || "",
+      size: item?.size || "",
     })
-    setPreviewUrl(item.image)
+    setPreviewUrl(item?.image || "")
   }
 
   const renderFormFields = () => (
@@ -305,8 +305,8 @@ const Gallery = () => {
           </SelectTrigger>
           <SelectContent>
             {categories.map((cat) => (
-              <SelectItem key={cat._id} value={cat._id}>
-                {cat.name}
+              <SelectItem key={cat?._id} value={cat?._id}>
+                {cat?.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -437,22 +437,22 @@ const Gallery = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((item) => (
-              <Card key={item._id} className="overflow-hidden">
+              <Card key={item?._id} className="overflow-hidden">
                 <div className="relative h-48">
                   <img
-                    src={item.image}
-                    alt={item.title}
+                    src={item?.image}
+                    alt={item?.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <CardContent className="p-4">
-                  <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
+                  <h3 className="font-semibold text-lg mb-1">{item?.title}</h3>
                   <p className="text-sm text-muted-foreground mb-2">
-                    {item.category.name}
+                    {item?.category?.name}
                   </p>
-                  {item.medium && (
+                  {item?.medium && (
                     <p className="text-sm text-muted-foreground mb-2">
-                      {item.medium}
+                      {item?.medium}
                     </p>
                   )}
                   <div className="flex gap-2 mt-4">

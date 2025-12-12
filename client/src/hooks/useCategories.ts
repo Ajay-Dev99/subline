@@ -47,7 +47,7 @@ export const useCreateCategory = () => {
   return useMutation({
     mutationFn: (data: { name: string }) => categoryAPI.create(data),
     onSuccess: (response) => {
-      if (response.success) {
+      if (response?.success) {
         queryClient.invalidateQueries({ queryKey: categoryKeys.all })
         toast({
           title: "Success",
@@ -56,7 +56,7 @@ export const useCreateCategory = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to create category",
+          description: response?.message || "Failed to create category",
           variant: "destructive",
         })
       }
@@ -64,7 +64,7 @@ export const useCreateCategory = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to create category",
+        description: error?.message || "Failed to create category",
         variant: "destructive",
       })
     },
@@ -80,10 +80,10 @@ export const useUpdateCategory = () => {
     mutationFn: ({ id, data }: { id: string; data: { name: string } }) =>
       categoryAPI.update(id, data),
     onSuccess: (response, variables) => {
-      if (response.success) {
+      if (response?.success) {
         queryClient.invalidateQueries({ queryKey: categoryKeys.all })
         queryClient.invalidateQueries({
-          queryKey: categoryKeys.detail(variables.id),
+          queryKey: categoryKeys.detail(variables?.id),
         })
         toast({
           title: "Success",
@@ -92,7 +92,7 @@ export const useUpdateCategory = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to update category",
+          description: response?.message || "Failed to update category",
           variant: "destructive",
         })
       }
@@ -100,7 +100,7 @@ export const useUpdateCategory = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to update category",
+        description: error?.message || "Failed to update category",
         variant: "destructive",
       })
     },
@@ -115,7 +115,7 @@ export const useDeleteCategory = () => {
   return useMutation({
     mutationFn: (id: string) => categoryAPI.delete(id),
     onSuccess: (response) => {
-      if (response.success) {
+      if (response?.success) {
         queryClient.invalidateQueries({ queryKey: categoryKeys.all })
         toast({
           title: "Success",
@@ -124,7 +124,7 @@ export const useDeleteCategory = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to delete category",
+          description: response?.message || "Failed to delete category",
           variant: "destructive",
         })
       }
@@ -132,7 +132,7 @@ export const useDeleteCategory = () => {
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to delete category",
+        description: error?.message || "Failed to delete category",
         variant: "destructive",
       })
     },
