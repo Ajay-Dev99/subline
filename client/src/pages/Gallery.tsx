@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Navigation from "@/components/Navigation"
-import ArtworkCard from "@/components/ArtworkCard"
+import ArtworkCard from "@/components/ui/ArtworkCard"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useGallery, useCategories } from "@/hooks"
