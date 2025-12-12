@@ -4,6 +4,11 @@ import artwork3 from "@/assets/artwork-3.jpg";
 import artwork4 from "@/assets/artwork-4.jpg";
 import artwork5 from "@/assets/artwork-5.jpg";
 import artwork6 from "@/assets/artwork-6.jpg";
+import artwork7 from "@/assets/artwork-7.jpg";
+import artwork8 from "@/assets/artwork-8.jpg";
+import artwork9 from "@/assets/artwork-9.jpg";
+import artwork10 from "@/assets/artwork-10.jpg";
+
 
 export interface Artwork {
   id: string;
@@ -18,57 +23,93 @@ export interface Artwork {
 export const artworks: Artwork[] = [
   {
     id: "1",
-    title: "Contemplation",
+    title: "The Writer's Smile",
     category: "Portraits",
     image: artwork1,
-    description: "A detailed pencil portrait capturing a moment of quiet introspection. The interplay of light and shadow brings depth to the subject's expression.",
-    medium: "Pencil on Paper",
-    size: "18 × 24 inches"
+    description: "A colorful caricature portrait of a woman in traditional attire, captured mid-smile while writing at a small desk.",
+    medium: "Watercolor and Ink",
+    size: "A4"
   },
   {
     id: "2",
-    title: "Organic Forms",
-    category: "Abstract",
+    title: "Classic Pencil Portrait",
+    category: "Portraits",
     image: artwork2,
-    description: "An exploration of geometric and organic shapes in harmony. This abstract piece invites viewers to find their own meaning in the flowing forms.",
-    medium: "Mixed Media",
-    size: "24 × 18 inches"
+    description: "A monochrome graphite portrait of a young woman, highlighting delicate shading and texture in the hair and dress.",
+    medium: "Pencil on Paper",
+    size: "A4"
   },
   {
     id: "3",
-    title: "Botanical Study",
-    category: "Nature",
+    title: "Digital Artist Caricature",
+    category: "Portraits",
     image: artwork3,
-    description: "A meticulous study of natural forms, showcasing the intricate beauty found in botanical subjects through precise line work.",
-    medium: "Graphite",
-    size: "16 × 20 inches"
+    description: "A playful caricature of a woman working at a keyboard, drawn with ink and colored with yellow pencil strokes for a dynamic effect.",
+    medium: "Ink and Color Pencil",
+    size: "A5"
   },
   {
     id: "4",
-    title: "Dreamscape",
+    title: "The Family Line",
     category: "Concept Art",
     image: artwork4,
-    description: "A surreal conceptual piece blending reality and imagination. This work explores themes of fantasy, architecture, and the subconscious mind.",
-    medium: "Ink and Pencil",
-    size: "20 × 16 inches"
+    description: "A minimalist, abstract sketch of a seated family of four, focusing on form and color wash to convey relationship and posture.",
+    medium: "Ink and Watercolor Wash",
+    size: "A3"
   },
   {
     id: "5",
-    title: "Figure in Motion",
-    category: "Portraits",
+    title: "Aqua Bloom",
+    category: "Abstract",
     image: artwork5,
-    description: "A dynamic figure study emphasizing movement and form. Expressive lines capture the energy and grace of the human body.",
-    medium: "Charcoal and Ink",
-    size: "24 × 18 inches"
+    description: "A vibrant acrylic painting of a nude figure underwater, surrounded by bubbles and grasping a pink, lotus-like bloom. Rich deep blue and black textures dominate.",
+    medium: "Acrylic on Canvas",
+    size: "18 × 24 inches"
   },
   {
     id: "6",
-    title: "Urban Perspective",
-    category: "Architecture",
+    title: "Caricature of a Man",
+    category: "Portraits",
     image: artwork6,
-    description: "A detailed architectural drawing exploring perspective and urban design. Clean lines convey the structured beauty of city spaces.",
-    medium: "Technical Pen",
-    size: "22 × 16 inches"
+    description: "A detailed black and white ink sketch caricature of a man with large hair and a beard, wearing a plaid shirt.",
+    medium: "Ink on Paper",
+    size: "A4"
+  },
+  {
+    id: "7",
+    title: "Filmmaker's Whim",
+    category: "Portraits",
+    image: artwork7,
+    description: "A playful caricature featuring a man with a film reel motif surrounding him, rendered in black and white ink sketch style.",
+    medium: "Ink on Paper",
+    size: "A4"
+  },
+  {
+    id: "8",
+    title: "Gentle Smile",
+    category: "Portraits",
+    image: artwork8,
+    description: "A soft, monochrome ink wash portrait of a smiling woman in a headscarf, characterized by fluid lines and deep shading.",
+    medium: "Ink Wash on Paper",
+    size: "A4"
+  },
+  {
+    id: "9",
+    title: "Riverside Commute",
+    category: "Nature",
+    image: artwork9,
+    description: "A bright watercolor landscape scene depicting people on a path near palm trees, with one person riding a bicycle. Features vibrant green, purple, and red hues.",
+    medium: "Watercolor",
+    size: "A3"
+  },
+  {
+    id: "10",
+    title: "Hometown Street",
+    category: "Architecture",
+    image: artwork10,
+    description: "An expressive watercolor landscape focusing on an old village street lined with houses, using a mix of earth tones and strong brushwork.",
+    medium: "Watercolor",
+    size: "A3"
   }
 ];
 
