@@ -19,7 +19,7 @@ const ArtworkDetail = () => {
   const allArtworks = allArtworksData?.data || [];
   
   // Find current index for navigation
-  const currentIndex = allArtworks.findIndex(a => a._id === id);
+  const currentIndex = allArtworks.findIndex(a => a?._id === id);
   const prevArtwork = currentIndex > 0 ? allArtworks[currentIndex - 1] : null;
   const nextArtwork = currentIndex < allArtworks.length - 1 ? allArtworks[currentIndex + 1] : null;
 
@@ -78,8 +78,8 @@ const ArtworkDetail = () => {
               <div className="relative group animate-fade-in">
                 <div className="bg-muted rounded-sm overflow-hidden">
                   <img 
-                    src={artwork.image} 
-                    alt={artwork.title}
+                    src={artwork?.image} 
+                    alt={artwork?.title}
                     className="w-full h-auto"
                   />
                 </div>
@@ -89,29 +89,29 @@ const ArtworkDetail = () => {
               <div className="space-y-8 animate-fade-in lg:pt-12" style={{ animationDelay: '0.2s' }}>
                 <div>
                   <p className="text-sm text-muted-foreground uppercase tracking-wider mb-3">
-                    {artwork.category.name}
+                    {artwork?.category?.name}
                   </p>
                   <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-                    {artwork.title}
+                    {artwork?.title}
                   </h1>
-                  {artwork.description && (
+                  {artwork?.description && (
                     <p className="text-lg text-muted-foreground leading-relaxed">
-                      {artwork.description}
+                      {artwork?.description}
                     </p>
                   )}
                 </div>
                 
                 <div className="border-t border-border pt-8 space-y-4">
-                  {artwork.medium && (
+                  {artwork?.medium && (
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Medium</span>
-                      <span className="font-medium">{artwork.medium}</span>
+                      <span className="font-medium">{artwork?.medium}</span>
                     </div>
                   )}
-                  {artwork.size && (
+                  {artwork?.size && (
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Size</span>
-                      <span className="font-medium">{artwork.size}</span>
+                      <span className="font-medium">{artwork?.size}</span>
                     </div>
                   )}
                 </div>
@@ -121,7 +121,7 @@ const ArtworkDetail = () => {
                   {prevArtwork && (
                     <Button
                       variant="outline"
-                      onClick={() => navigate(`/artwork/${prevArtwork._id}`)}
+                      onClick={() => navigate(`/artwork/${prevArtwork?._id}`)}
                       className="flex-1"
                     >
                       <ChevronLeft className="w-4 h-4 mr-2" />
@@ -131,7 +131,7 @@ const ArtworkDetail = () => {
                   {nextArtwork && (
                     <Button
                       variant="outline"
-                      onClick={() => navigate(`/artwork/${nextArtwork._id}`)}
+                      onClick={() => navigate(`/artwork/${nextArtwork?._id}`)}
                       className="flex-1"
                     >
                       Next

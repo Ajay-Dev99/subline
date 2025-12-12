@@ -48,15 +48,15 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
               {featuredArtworks.map((artwork, index) => (
                 <div
-                  key={artwork._id}
+                  key={artwork?._id}
                   className="animate-fade-in"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <ArtworkCard
-                    id={artwork._id}
-                    title={artwork.title}
-                    category={artwork.category.name}
-                    image={artwork.image}
+                    id={artwork?._id}
+                    title={artwork?.title}
+                    category={artwork?.category?.name}
+                    image={artwork?.image}
                   />
                 </div>
               ))}

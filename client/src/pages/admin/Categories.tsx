@@ -59,8 +59,8 @@ const Categories = () => {
     try {
       setLoading(true)
       const response = await categoryAPI.getAll()
-      if (response.success) {
-        setCategories(response.data)
+      if (response?.success) {
+        setCategories(response?.data || [])
       }
     } catch (error) {
       toast({
@@ -86,7 +86,7 @@ const Categories = () => {
     try {
       setSubmitting(true)
       const response = await categoryAPI.create({ name: formName })
-      if (response.success) {
+      if (response?.success) {
         toast({
           title: "Success",
           description: "Category created successfully",
@@ -97,7 +97,7 @@ const Categories = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to create category",
+          description: response?.message || "Failed to create category",
           variant: "destructive",
         })
       }
@@ -117,10 +117,10 @@ const Categories = () => {
 
     try {
       setSubmitting(true)
-      const response = await categoryAPI.update(editingCategory._id, {
+      const response = await categoryAPI.update(editingCategory?._id, {
         name: formName,
       })
-      if (response.success) {
+      if (response?.success) {
         toast({
           title: "Success",
           description: "Category updated successfully",
@@ -131,7 +131,7 @@ const Categories = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to update category",
+          description: response?.message || "Failed to update category",
           variant: "destructive",
         })
       }
@@ -150,8 +150,8 @@ const Categories = () => {
     if (!deletingCategory) return
 
     try {
-      const response = await categoryAPI.delete(deletingCategory._id)
-      if (response.success) {
+      const response = await categoryAPI.delete(deletingCategory?._id)
+      if (response?.success) {
         toast({
           title: "Success",
           description: "Category deleted successfully",
@@ -161,7 +161,7 @@ const Categories = () => {
       } else {
         toast({
           title: "Error",
-          description: response.message || "Failed to delete category",
+          description: response?.message || "Failed to delete category",
           variant: "destructive",
         })
       }
@@ -176,7 +176,7 @@ const Categories = () => {
 
   const openEditDialog = (category: Category) => {
     setEditingCategory(category)
-    setFormName(category.name)
+    setFormName(category?.name || "")
   }
 
   return (
@@ -242,12 +242,12 @@ const Categories = () => {
                 </TableHeader>
                 <TableBody>
                   {categories.map((category) => (
-                    <TableRow key={category._id}>
+                    <TableRow key={category?._id}>
                       <TableCell className="font-medium">
-                        {category.name}
+                        {category?.name}
                       </TableCell>
                       <TableCell>
-                        {new Date(category.createdAt).toLocaleDateString()}
+                        {new Date(category?.createdAt).toLocaleDateString()}
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">

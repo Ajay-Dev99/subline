@@ -53,7 +53,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             <div className="flex items-center gap-3">
               {admin && (
                 <span className="text-sm text-muted-foreground">
-                  {admin.username}
+                  {admin?.username}
                 </span>
               )}
               <Link to="/">
