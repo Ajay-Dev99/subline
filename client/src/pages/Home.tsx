@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Navigation from "@/components/Navigation"
 import Hero from "@/components/Hero"
-import ArtworkCard from "@/components/ArtworkCard"
+import ArtworkCard from "@/components/ui/ArtworkCard"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useGallery } from "@/hooks"
