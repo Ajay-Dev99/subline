@@ -8,16 +8,7 @@ import artwork7 from "@/assets/artwork-7.jpg";
 import artwork8 from "@/assets/artwork-8.jpg";
 import artwork9 from "@/assets/artwork-9.jpg";
 import artwork10 from "@/assets/artwork-10.jpg";
-import artwork11 from "@/assets/artwork-11.jpg";
-import artwork12 from "@/assets/artwork-12.jpg";
-import artwork13 from "@/assets/artwork-13.jpg";
-import artwork14 from "@/assets/artwork-14.jpg";
-import artwork15 from "@/assets/artwork-15.jpg";
-import artwork16 from "@/assets/artwork-16.jpg";
-import artwork17 from "@/assets/artwork-17.jpg";
-import artwork18 from "@/assets/artwork-18.jpg";
-import artwork19 from "@/assets/artwork-19.jpg";
-import artwork20 from "@/assets/artwork-20.jpg";
+
 
 export interface Artwork {
   id: string;
